@@ -1,0 +1,17 @@
+<div class="card shadow">
+  <div class="card-header bg-transparent">
+    <h3 class="mb-0">Kategoriler</h3>
+  </div>
+  <div class="card-body">
+    <div class="list-group">
+      <a [class]="getAllCategoryClass()" routerLink="/product"> Tümü </a>
+      <a
+        *ngFor="let category of categories"
+        (click)="setCurrentCategory(category)"
+        routerLink="/product/category/{{ category.id }}"
+        [class]="getCurrentCategoryClass(category)"
+        >{{ category.name }}</a
+      >
+    </div>
+  </div>
+</div>

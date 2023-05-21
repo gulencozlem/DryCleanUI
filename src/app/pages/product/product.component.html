@@ -1,0 +1,160 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Ürün Ekleme</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="customerAddForm">
+      <h6 class="heading-small text-muted mb-4">
+        <b>Ürün Bilgilerini Giriniz</b>
+      </h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="categoryName"
+                >Kategori</label
+              >
+              <input
+                type="text"
+                id="categoryName"
+                formControlName="categoryName"
+                class="form-control form-control-alternative"
+                placeholder="Kategori griniz.."
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="productName"
+                >Ürün Adı</label
+              >
+              <input
+                type="text"
+                id="productName"
+                formControlName="productName"
+                class="form-control form-control-alternative"
+                placeholder="Ürün adını griniz.."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="add()">Ekle</button>
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="modal.close('Close click')"
+    >
+      Kapat
+    </button>
+  </div>
+</ng-template>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <app-flash-cards></app-flash-cards>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+
+<div class="container-fluid mt--4">
+  <!-- Table -->
+  <div class="row">
+    <div class="col-3">
+      <app-category></app-category>
+    </div>
+    <div class="col-9">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0 d-inline">Ürünler</h3>
+          <div class="d-flex">
+            <button
+              class="btn btn-outline-primary mb-2 mr-2 ml-auto"
+              (click)="openLg(content)"
+            >
+              Ürün Ekle
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="dataLoaded == false" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <!-- <div *ngIf="auth == false" class="text-center">
+            <h1>Yetkiniz Bulunmamaktadır !</h1>
+          </div> -->
+          <div *ngIf="dataLoaded != false" class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Kategori Id</th>
+                  <th scope="col">Ürün Adı</th>
+                  <th scope="col">Eklenme Tarihi</th>
+                  <th scope="col">Aktif mi ?</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{ product.id }}</span>
+                      </div>
+                    </div>
+                  </th>
+                  <td>{{ product.categoryId }}</td>
+                  <td>
+                    {{ product.name }}
+                  </td>
+                  <td>
+                    {{ product.addedAt }}
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span class="mr-2">{{ product.isActive }}</span>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <div ngbDropdown container="body">
+                      <button
+                        class="btn btn-outline-primary btn-sm"
+                        ngbDropdownToggle
+                      >
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <div ngbDropdownMenu>
+                        <button ngbDropdownItem>Düzenle</button>
+                        <div class="dropdown-divider"></div>
+                        <button ngbDropdownItem>
+                          <b style="color: red">Sil</b>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
